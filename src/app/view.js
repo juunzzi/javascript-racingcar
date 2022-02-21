@@ -57,23 +57,23 @@ class RacingCarGameView {
 
   renderInitialGameState(cars) {
     const progressTemplate = cars.reduce(
-      (acc, car) => `${acc}${RacingCarGameView.generateProgressTemplate(car)}`,
+      (acc, car) => `${acc}${this.generateProgressTemplate(car)}`,
       '',
     );
     this.gameProgress.innerHTML = progressTemplate;
   }
 
   renderAfterCarSetting() {
-    RacingCarGameView.renderElement(this.countInputForm);
+    this.renderElement(this.countInputForm);
   }
 
   renderResults(winners) {
-    const winnersTemplate = RacingCarGameView.generateWinnersTemplate({
+    const winnersTemplate = this.generateWinnersTemplate({
       winners,
     });
     this.winners.insertAdjacentHTML('beforebegin', winnersTemplate);
 
-    RacingCarGameView.renderElement(this.restartBtn);
+    this.renderElement(this.restartBtn);
   }
 
   /** this가 없다고 해서 static으로 바꾸긴 싫은데 이 옵션이 어떤 의미에서 필요할까요 ? */
@@ -90,13 +90,13 @@ class RacingCarGameView {
 
   async renderLoadingAboutRound() {
     const loadingIconNodes = document.querySelectorAll(DOM.LOADING_ICON.toCLASS());
-    RacingCarGameView.renderElements(loadingIconNodes);
-    await RacingCarGameView.triggerAnimation({
+    this.renderElements(loadingIconNodes);
+    await this.triggerAnimation({
       targetNodes: loadingIconNodes,
-      animation: RacingCarGameView.rotateAnimation,
+      animation: this.rotateAnimation,
       during: DELAY_PER_ROUND,
     });
-    RacingCarGameView.hideElements(loadingIconNodes);
+    this.hideElements(loadingIconNodes);
   }
 
   disableInputForms() {
@@ -106,7 +106,7 @@ class RacingCarGameView {
     this.countBtn.disabled = true;
   }
 
-  static generateProgressTemplate({ name, id }) {
+  generateProgressTemplate({ name, id }) {
     return `
     <div class="${DOM.CAR_PROGRESS}">
       <div class="${DOM.CAR_NAME}" id="${name}${id}">${name}</div>
@@ -115,7 +115,7 @@ class RacingCarGameView {
   `;
   }
 
-  static generateWinnersTemplate({ winners }) {
+  generateWinnersTemplate({ winners }) {
     return `<h2 id="${DOM.WINNER_CONTAINER}">🏆최종 승리자:<span id="${
       DOM.WINNER_NAME
     }">${winners.join(',')}</span>🏆</h2>
@@ -123,29 +123,29 @@ class RacingCarGameView {
   }
 
   /** static 메소드는 언제 작성하면 좋을까요? */
-  static renderElements(nodeList) {
-    nodeList.forEach((node) => RacingCarGameView.renderElement(node));
+  renderElements(nodeList) {
+    nodeList.forEach((node) => this.renderElement(node));
   }
 
-  static hideElements(nodeList) {
-    nodeList.forEach((node) => RacingCarGameView.hideElement(node));
+  hideElements(nodeList) {
+    nodeList.forEach((node) => this.hideElement(node));
   }
 
-  static renderElement(el) {
+  renderElement(el) {
     el.classList.replace(HIDE_CLASS_NAME, SHOW_CLASS_NAME);
   }
 
-  static hideElement(el) {
+  hideElement(el) {
     el.classList.replace(SHOW_CLASS_NAME, HIDE_CLASS_NAME);
   }
 
-  static async triggerAnimation({ targetNodes, animation, during }) {
+  async triggerAnimation({ targetNodes, animation, during }) {
     requestAnimationFrame((timestamp) => animation(0, timestamp, targetNodes, during));
     await delay(during);
   }
 
   // 인자를 직접 수정하고 싶지 않은데 방법이 없을까요?
-  static rotateAnimation = (progress, start, nodes, during) => {
+  rotateAnimation = (progress, start, nodes, during) => {
     if (progress >= during) {
       return;
     }
@@ -153,7 +153,7 @@ class RacingCarGameView {
       node.style.transform = `rotate(${progress / 10}deg)`;
     });
     requestAnimationFrame((timestamp) =>
-      RacingCarGameView.rotateAnimation(timestamp - start, start, nodes, during),
+      this.rotateAnimation(timestamp - start, start, nodes, during),
     );
   };
 }
