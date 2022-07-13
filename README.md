@@ -31,7 +31,7 @@ live-server 폴더명
 
 ## 👏 Contributing
 
-만약 미션 수행 중에 개선사항이 보인다면, 언제든 자유롭게 PR을 보내주세요. 
+만약 미션 수행 중에 개선사항이 보인다면, 언제든 자유롭게 PR을 보내주세요.
 
 <br>
 
@@ -44,3 +44,12 @@ live-server 폴더명
 ## 📝 License
 
 This project is [MIT](https://github.com/woowacourse/javascript-racingcar/blob/main/LICENSE) licensed.
+
+<br>
+
+## 📈 Commit Unit
+
+- 기본적인 UI 작성
+- UX 반영
+- 경주 이벤트 로직
+- Loader 이벤트 로직
