@@ -13,35 +13,36 @@
       <div class="game-container">
         <div class="game-title">🏎️ 자동차 경주 게임 🏎️</div>
 
-        <div class="game-input-container">
+        <div id="car-name" class="game-input-container">
           <span class="input__info">
             5자 이하의 자동차 이름을 콤마로 구분하여 입력해주세요.
           </span>
           <div class="input__bundle">
-            <input type="text" />
+            <input id="car-name__input" type="text" />
             <div class="button-wrapper">
-              <button>확인</button>
+              <button class="car-name__button">확인</button>
             </div>
           </div>
         </div>
 
-        <div class="game-input-container">
+        <div id="game-count" class="game-input-container visible__hidden">
           <span class="input__info">시도할 횟수를 입력해주세요.</span>
           <div class="input__bundle">
-            <input type="text" />
+            <input id="game-count__input" type="number" />
             <div class="button-wrapper">
-              <button>확인</button>
+              <button class="game-count__button">확인</button>
             </div>
           </div>
         </div>
 
-        <div class="game-action-container">tmp</div>
+        <div class="game-action-container"></div>
 
-        <div>🏆 최종 우승자 : 🏆</div>
-        <button>다시 시작하기</button>
+        <div class="visible__hidden">🏆 최종 우승자 : 🏆</div>
+        <button class="visible__hidden">다시 시작하기</button>
       </div>
     </section>
 
-    <script src="/script/main.js"></script>
+    <script src="/script/nameInput.js"></script>
+    <script src="/script/countInput.js"></script>
   </body>
 </html>
