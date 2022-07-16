@@ -1,41 +1,82 @@
-const carNameInput = document.querySelector("#car-name__input");
-const carNameBtn = document.querySelector(".car-name__button");
-
-const gameInputContainer = document.querySelector("#game-count");
-
-const gameActionContainer = document.querySelector(".game-action-container");
-
 const getGameInput = () => {
+  const carNameInput = document.querySelector("#car-name__input");
+  const gameInputContainer = document.querySelector("#game-count");
+
   const carNameArray = carNameInput.value.split(",");
   const isValid = isValidInputValueOfCarName(carNameArray);
 
   if (isValid) {
     gameInputContainer.classList.remove("visible__hidden");
-    deleteCarNameList();
+    deleteGame();
     setCarNameList(carNameArray);
   }
   if (!isValid) {
     gameInputContainer.classList.add("visible__hidden");
-    deleteCarNameList();
+    deleteGame();
   }
 };
 
 const setCarNameList = (carNameArray) => {
+  const carNameContainer = document.querySelector(".race-car-container");
+
   carNameArray.map((name, ind) => {
     const singleCarRacingLog = document.createElement("div");
+
     singleCarRacingLog.innerHTML = name;
 
-    singleCarRacingLog.classList.add("car-name__ul");
-
+    singleCarRacingLog.classList.add("car-name__li");
     singleCarRacingLog.setAttribute("id", ind);
 
-    gameActionContainer.appendChild(singleCarRacingLog);
+    carNameContainer.appendChild(singleCarRacingLog);
   });
 };
 
-const deleteCarNameList = () => {
-  while (gameActionContainer.hasChildNodes()) {
-    gameActionContainer.removeChild(gameActionContainer.firstChild);
+export const deleteGame = () => {
+  deleteCarName();
+  deleteRaceLog();
+};
+
+export const deleteAllInfo = () => {
+  deleteCarName();
+  deleteRaceLog();
+  makeInitialInputStatus();
+};
+
+const makeInitialInputStatus = () => {
+  const carNameInput = document.querySelector("#car-name__input");
+  const gameCountInput = document.querySelector("#game-count__input");
+
+  carNameInput.value = "";
+  gameCountInput.value = "";
+
+  const gameInputContainer = document.querySelector("#game-count");
+
+  gameInputContainer.classList.add("visible__hidden");
+};
+
+const deleteCarName = () => {
+  const carNameContainer = document.querySelector(".race-car-container");
+
+  while (carNameContainer.hasChildNodes()) {
+    carNameContainer.removeChild(carNameContainer.firstChild);
+  }
+};
+
+export const deleteRaceLog = () => {
+  const raceLogContainer = document.querySelector(".race-log-container");
+
+  while (raceLogContainer.hasChildNodes()) {
+    raceLogContainer.removeChild(raceLogContainer.firstChild);
+  }
+
+  const winnerName = document.querySelector(".race-winner");
+  const restartButton = document.querySelector(".race-restart__button");
+
+  if (!winnerName.classList.value.includes("visible__hidden")) {
+    winnerName.classList.add("visible__hidden");
+  }
+  if (!restartButton.classList.value.includes("visible__hidden")) {
+    restartButton.classList.add("visible__hidden");
   }
 };
 
@@ -74,4 +115,8 @@ const isValidInputValueOfCarName = (carNameArray) => {
   return true;
 };
 
-carNameBtn.addEventListener("click", getGameInput);
+(function () {
+  const carNameBtn = document.querySelector(".car-name__button");
+
+  carNameBtn.addEventListener("click", getGameInput);
+})();
