@@ -1,19 +1,19 @@
 import { startGame } from "./game.js";
-import { deleteRaceLog } from "./nameInput.js";
+import { deleteRaceLogInGameField } from "./deleteLogic.js";
 
 const prepareGame = () => {
-  const carNameInput = document.querySelector("#car-name__input");
-  const gameCountInput = document.querySelector("#game-count__input");
+  const CAR_NAME_INPUT = document.querySelector("#car-name__input");
+  const GAME_COUNT_INPUT = document.querySelector("#game-count__input");
 
-  const isValid = isValidInputValueOfGameCount(gameCountInput.value);
+  const IS_VALID = isValidInputValueOfGameCount(GAME_COUNT_INPUT.value);
 
-  if (isValid) {
-    const ok = confirm(`${gameCountInput.value}번의 게임을 돌리겠는가?`);
+  if (IS_VALID) {
+    const ok = confirm(`${GAME_COUNT_INPUT.value}번의 게임을 돌리겠는가?`);
     if (ok) {
-      deleteRaceLog();
+      deleteRaceLogInGameField();
       startGame(
-        carNameInput.value.split(",").length,
-        Number(gameCountInput.value)
+        CAR_NAME_INPUT.value.split(",").length,
+        Number(GAME_COUNT_INPUT.value)
       );
     }
   }
@@ -21,7 +21,7 @@ const prepareGame = () => {
 
 const isValidInputValueOfGameCount = (gameCount) => {
   if (gameCount <= 0) {
-    alert("정상적인 수를 입력해줄래? ㅠ");
+    alert("정상적인 수를 입력해 줘.");
     return false;
   }
   if (gameCount > 20) {
@@ -32,7 +32,7 @@ const isValidInputValueOfGameCount = (gameCount) => {
 };
 
 (function () {
-  const gameCountBtn = document.querySelector(".game-count__button");
+  const GAME_COUNT_BUTTON = document.querySelector(".game-count__button");
 
-  gameCountBtn.addEventListener("click", prepareGame);
+  GAME_COUNT_BUTTON.addEventListener("click", prepareGame);
 })();

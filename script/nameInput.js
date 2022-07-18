@@ -1,101 +1,59 @@
+import {
+  deleteCarNameInGameField,
+  deleteRaceLogInGameField,
+} from "./deleteLogic.js";
+
 const getGameInput = () => {
-  const carNameInput = document.querySelector("#car-name__input");
-  const gameInputContainer = document.querySelector("#game-count");
+  const CAR_NAME_INPUT = document.querySelector("#car-name__input");
+  const GAME_INPUT_CONTAINER = document.querySelector("#game-count");
 
-  const carNameArray = carNameInput.value.split(",");
-  const isValid = isValidInputValueOfCarName(carNameArray);
+  const CAR_NAME_ARRAY = CAR_NAME_INPUT.value.split(",");
+  const IS_VALID = isValidInputValueOfCarName(CAR_NAME_ARRAY);
 
-  if (isValid) {
-    gameInputContainer.classList.remove("visible__hidden");
-    deleteGame();
-    setCarNameList(carNameArray);
+  if (IS_VALID) {
+    GAME_INPUT_CONTAINER.classList.remove("visible__hidden");
+    deleteCarNameInGameField();
+    deleteRaceLogInGameField();
+    setCarNameList(CAR_NAME_ARRAY);
   }
-  if (!isValid) {
-    gameInputContainer.classList.add("visible__hidden");
-    deleteGame();
+  if (!IS_VALID) {
+    GAME_INPUT_CONTAINER.classList.add("visible__hidden");
+    deleteCarNameInGameField();
+    deleteRaceLogInGameField();
   }
 };
 
 const setCarNameList = (carNameArray) => {
-  const carNameContainer = document.querySelector(".race-car-container");
+  const CAR_NAME_CONTAINER = document.querySelector(".race-car-container");
 
   carNameArray.map((name, ind) => {
-    const singleCarRacingLog = document.createElement("div");
+    const SINGLE_RACE_LOG = document.createElement("div");
 
-    singleCarRacingLog.innerHTML = name;
+    SINGLE_RACE_LOG.innerHTML = name;
 
-    singleCarRacingLog.classList.add("car-name__li");
-    singleCarRacingLog.setAttribute("id", ind);
+    SINGLE_RACE_LOG.classList.add("car-name__li");
+    SINGLE_RACE_LOG.setAttribute("id", ind);
 
-    carNameContainer.appendChild(singleCarRacingLog);
+    CAR_NAME_CONTAINER.appendChild(SINGLE_RACE_LOG);
   });
 };
 
-export const deleteGame = () => {
-  deleteCarName();
-  deleteRaceLog();
-};
-
-export const deleteAllInfo = () => {
-  deleteCarName();
-  deleteRaceLog();
-  makeInitialInputStatus();
-};
-
-const makeInitialInputStatus = () => {
-  const carNameInput = document.querySelector("#car-name__input");
-  const gameCountInput = document.querySelector("#game-count__input");
-
-  carNameInput.value = "";
-  gameCountInput.value = "";
-
-  const gameInputContainer = document.querySelector("#game-count");
-
-  gameInputContainer.classList.add("visible__hidden");
-};
-
-const deleteCarName = () => {
-  const carNameContainer = document.querySelector(".race-car-container");
-
-  while (carNameContainer.hasChildNodes()) {
-    carNameContainer.removeChild(carNameContainer.firstChild);
-  }
-};
-
-export const deleteRaceLog = () => {
-  const raceLogContainer = document.querySelector(".race-log-container");
-
-  while (raceLogContainer.hasChildNodes()) {
-    raceLogContainer.removeChild(raceLogContainer.firstChild);
-  }
-
-  const winnerName = document.querySelector(".race-winner");
-  const restartButton = document.querySelector(".race-restart__button");
-
-  if (!winnerName.classList.value.includes("visible__hidden")) {
-    winnerName.classList.add("visible__hidden");
-  }
-  if (!restartButton.classList.value.includes("visible__hidden")) {
-    restartButton.classList.add("visible__hidden");
-  }
-};
-
 const isValidInputValueOfCarName = (carNameArray) => {
-  const nameArrayLength = carNameArray.length;
-  const dupArray = new Set(carNameArray);
+  const NAME_ARRAY_LENGTH = carNameArray.length;
+  const DUP_CAR_NAME_ARRAY = new Set(carNameArray);
 
   // 개수
-  if (nameArrayLength <= 1) {
+  if (NAME_ARRAY_LENGTH <= 1) {
     alert("혼자서는 경기를 할 수 없어.");
     return false;
   }
-  if (nameArrayLength > 5) {
+  if (NAME_ARRAY_LENGTH > 5) {
     alert("5개보다 적은 수의 차를 입력해줘.");
     return false;
   }
 
   // 이름 길이
-  for (let i = 0; i < nameArrayLength; i++) {
+  for (let i = 0; i < NAME_ARRAY_LENGTH; i++) {
     if (carNameArray[i].length > 5) {
       alert(`${i + 1}번째 차 이름 확인해줘. 이름은 5글자 이내로 작성해야 해.`);
       return false;
@@ -107,7 +65,7 @@ const isValidInputValueOfCarName = (carNameArray) => {
   }
 
   // 중복 확인
-  if (carNameArray.length !== dupArray.size) {
+  if (carNameArray.length !== DUP_CAR_NAME_ARRAY.size) {
     alert("중복되는 이름이 존재해.");
     return false;
   }
@@ -116,7 +74,7 @@ const isValidInputValueOfCarName = (carNameArray) => {
 };
 
 (function () {
-  const carNameBtn = document.querySelector(".car-name__button");
+  const CAR_NAME_BUTTON = document.querySelector(".car-name__button");
 
-  carNameBtn.addEventListener("click", getGameInput);
+  CAR_NAME_BUTTON.addEventListener("click", getGameInput);
 })();
